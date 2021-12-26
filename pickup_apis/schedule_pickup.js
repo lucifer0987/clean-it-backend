@@ -2,6 +2,7 @@ const { Router } = require('express');
 const express = require('express');
 const route = express.Router();
 const { Pickup, validatePickup } = require('../models/Pickup');
+const Joi = require('joi');
 
 route.post('/schedule', async (req, res) => {
     const {error} = validatePickup(req.body);
@@ -83,8 +84,20 @@ route.post('/list', async (req, res) => {
     const schema = {
         email : Joi.string().email().required()
     };
+    const { error } = Joi.validate(req.body, schema);
+    if(error){
+        return res.status(400).send({
+            success : false,
+            message : error.details[0].message
+        });
+    }
 
-    
+    const pickups = await Pickup.find({email: req.body.email});
+    return res.status(200).send({
+        count : pickups.length,
+        data : pickups
+    });
+
 });
 
 
