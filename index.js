@@ -18,3 +18,15 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
 })
+
+
+/*
+1. Pickup request raised - with availability,  date and time
+2. Pickup request accepted
+3. Clothes picked Up
+4. Clothes received
+5. Washing in-progress
+6. Washing comleted
+7. Delivery in-progress
+8. Delivered
+*/
